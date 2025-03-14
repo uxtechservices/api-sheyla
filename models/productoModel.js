@@ -1,4 +1,4 @@
-import pool from '../config/database.js';
+import getPool from '../config/database.js';
 
 const createTable = async () => {
     try {
@@ -34,7 +34,9 @@ const getProductoById = async (id) => {
 
 const getAllProductos = async () => {
   try {
-    const connection = await pool.getConnection();
+    const pool = getPool(); // Obtiene el pool **correctamente**
+    const connection = await pool.getConnection(); // Obtiene la conexión
+
     const [rows] = await connection.query('SELECT * FROM productos');
     connection.release();
     return rows;
